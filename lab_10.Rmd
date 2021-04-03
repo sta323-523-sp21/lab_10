@@ -1,0 +1,87 @@
+---
+title: "Lab 10"
+author: ""
+date: ""
+output: 
+  html_document:
+    toc: true
+    number_sections: false
+    toc_float: true
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+db <- DBI::dbConnect(RSQLite::SQLite(), dbname = "db/vet.sqlite")
+knitr::opts_chunk$set(echo = FALSE, comment = NA, message = FALSE, 
+                      warning = FALSE, connection = "db")
+```
+
+## Introduction
+
+In your repository you will find a directory named `data/` that contains four
+CSV files with information on pet owners, their pets, and their pets' procedure
+details and history. These CSV files have been added to the sqlite database
+`db/vet.sqlite`. Use the database and CSV files to complete the following tasks.
+
+## Packages
+
+```{r}
+library(tidyverse)
+library(RSQLite)
+library(DBI)
+```
+
+## Tasks
+
+Tasks 2 - 6 should use SQL code chunks along with SQL commands to 
+complete the task. Rename necessary fields so there is a consistent naming 
+scheme in your final table outputs.
+
+The `setup` chunk already has the code to connect to the database.
+
+#### Task 1
+
+In an R chunk, list all tables and their fields that exist in 
+`vet.sqlite`.
+
+#### Task 2
+
+Use `COUNT(*)` to determine how many total records exist in `procedure_history`.
+
+#### Task 3
+
+Get a table of owners that live in one of "Grand Rapids", "Kalamazoo", or
+"Traverse City".
+
+#### Task 4
+
+Which owners have a single pet that is a dog? Only output a table with each 
+owner's name and surname, and the type of pet and the pet's name. *Hint*:
+the `HAVING` clause can have aggregate functions in it.
+
+#### Task 5
+
+Which pet under the age of 10 had the most procedures according to the
+procedure history? Only return a table with the pet's name, kind, age, and 
+number of procedures.
+
+#### Task 6
+
+Get a table that contains the owner id, owner name, owner surname, owner city,
+and the total price they spent on procedures corresponding to procedure sub
+code 05. Only consider those owners from Lansing, Detroit, and Grand Rapids.
+Sort your table in ascending order by city and descending order by the total
+price within each city.
+
+#### Task 7
+
+Use the necessary CSV files in `data/` to redo Task 4 using only `dplyr` 
+functions in an R code chunk. Check out `?left_join()` for help on R's
+join functions.
+
+#### Task 8
+
+Construct an SQL query that outputs a table you can then use to create a 
+single visualization with `ggplot2`. Use SQL chunk option 
+`output.var="name_of_R_object"`, where in quotes you can specify the name of 
+the resulting table and use that name as a reference in R code chunks.
